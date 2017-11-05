@@ -13110,6 +13110,9 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.0": [
       "Microsoft.AspNetCore.All >= 2.0.0",
+      "Microsoft.EntityFrameworkCore >= 2.0.0",
+      "Microsoft.EntityFrameworkCore.SqlServer >= 2.0.0",
+      "Microsoft.EntityFrameworkCore.Tools >= 2.0.0",
       "Microsoft.NETCore.App >= 2.0.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.0.0"
     ]
@@ -13124,11 +13127,11 @@
       "hideWarningsAndErrors": true
     },
     "restore": {
-      "projectUniqueName": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\testMVC\\testMVC\\testMVC.csproj",
+      "projectUniqueName": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\AliHotel\\testMVC\\testMVC.csproj",
       "projectName": "testMVC",
-      "projectPath": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\testMVC\\testMVC\\testMVC.csproj",
+      "projectPath": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\AliHotel\\testMVC\\testMVC.csproj",
       "packagesPath": "C:\\Users\\Алидар\\.nuget\\packages\\",
-      "outputPath": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\testMVC\\testMVC\\obj\\",
+      "outputPath": "D:\\Univer\\V. Programmirovanie\\3semestr\\ASP.NET Core\\AliHotel\\testMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13158,6 +13161,14 @@
     "frameworks": {
       "netcoreapp2.0": {
         "dependencies": {
+          "Microsoft.EntityFrameworkCore": {
+            "target": "Package",
+            "version": "2.0.0"
+          },
+          "Microsoft.EntityFrameworkCore.Tools": {
+            "target": "Package",
+            "version": "2.0.0"
+          },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
             "version": "2.0.0"
@@ -13166,6 +13177,10 @@
             "target": "Package",
             "version": "2.0.0",
             "autoReferenced": true
+          },
+          "Microsoft.EntityFrameworkCore.SqlServer": {
+            "target": "Package",
+            "version": "2.0.0"
           },
           "Microsoft.AspNetCore.All": {
             "target": "Package",

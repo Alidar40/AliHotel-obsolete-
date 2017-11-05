@@ -9,3 +9,14 @@ D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\testMVC\testMVC\obj\Debug\ne
 D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\testMVC\testMVC\obj\Debug\netcoreapp2.0\testMVC.AssemblyInfo.cs
 D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\testMVC\testMVC\obj\Debug\netcoreapp2.0\testMVC.dll
 D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\testMVC\testMVC\obj\Debug\netcoreapp2.0\testMVC.pdb
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\bin\Debug\netcoreapp2.0\testMVC.deps.json
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\bin\Debug\netcoreapp2.0\testMVC.runtimeconfig.json
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\bin\Debug\netcoreapp2.0\testMVC.runtimeconfig.dev.json
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\bin\Debug\netcoreapp2.0\testMVC.dll
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\bin\Debug\netcoreapp2.0\testMVC.pdb
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.csprojResolveAssemblyReference.cache
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.csproj.CoreCompileInputs.cache
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.AssemblyInfoInputs.cache
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.AssemblyInfo.cs
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.dll
+D:\Univer\V. Programmirovanie\3semestr\ASP.NET Core\AliHotel\testMVC\obj\Debug\netcoreapp2.0\testMVC.pdb

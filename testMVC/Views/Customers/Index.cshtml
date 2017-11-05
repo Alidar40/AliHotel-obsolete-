@@ -15,22 +15,20 @@ else
     <table class="table table-­‐bordered table-­‐hover">
         <thead>
             <tr>
-                <th>ID</th>
+                <!--<th>ID</th>-->
                 <th>Name</th>
+                <!--<th>Birth Date</th>-->
                 <th>Room number</th>
-                <th>Arrival date</th>
-                <th>Departure date</th>
+                <!--<th>Arrival date</th>-->
+                <!--<th>Departure date</th>-->
             </tr>
         </thead>
         <tbody>
             @foreach (var customer in Model)
             {
                 <tr>
-                    <td>@customer.Id</td>
                     <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
                     <td>@customer.Room</td>
-                    <td>@customer.ArrivalDate</td>
-                    <td>@customer.DepartureDate</td>
                 </tr>
             }
             <!--
