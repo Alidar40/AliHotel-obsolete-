@@ -1,0 +1,55 @@
+﻿@model IEnumerable<testMVC.Models.Customer>
+@{
+    ViewData["Title"] = "Customers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Customers</h2>
+
+@if(!Model.Any())
+{
+    <p>We don't have any customers yet.</p>
+}
+else
+{
+    <table class="table table-­‐bordered table-­‐hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Room number</th>
+                <th>Arrival date</th>
+                <th>Departure date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@Html.ActionLink(customer.Name, "Details", "Customers", new { id = customer.Id }, null)</td>
+                    <td>@customer.Room</td>
+                    <td>@customer.ArrivalDate</td>
+                    <td>@customer.DepartureDate</td>
+                </tr>
+            }
+            <!--
+            <tr>
+                <td>A1</td>
+                <td>Ivan Ivanov</td>
+                <td>1</td>
+                <td>30.12.2017</td>
+                <td>08.01.2018</td>
+            </tr>
+            <tr>
+                <td>A2</td>
+                <td>Petr Petrov</td>
+                <td>2</td>
+                <td>31.11.2017</td>
+                <td>20.12.2017</td>
+            </tr>
+            -->
+        </tbody>
+    </table>
+}
+

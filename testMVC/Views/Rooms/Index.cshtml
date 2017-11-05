@@ -1,0 +1,60 @@
+﻿@model IEnumerable<testMVC.Models.Room>
+@{
+    ViewData["Title"] = "Rooms";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Rooms</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Capacity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var room in Model)
+        {
+
+            <tr>
+                <td>@room.Number</td>
+
+                @if(@room.IsOccupied)
+                {
+                    <td>Is Occupied</td>
+                }
+                else
+                {
+                    <td>Free</td>
+                }
+
+                @if (@room.Type == 1)
+                {
+                    <td>Standart</td>
+                }
+                else
+                {
+                    if (@room.Type == 2)
+                    {
+                        <td>Junior suite</td>
+                    }
+                    else
+                    {
+                        if (@room.Type == 3)
+                        {
+                            <td>Suite</td>
+                        }
+                        else
+                        {
+                            <td>Mistake</td>
+
+                        }
+                    }
+                }
+                <td>@room.Capacity</td>
+            </tr>
+        }
+    </tbody>
+</table>
