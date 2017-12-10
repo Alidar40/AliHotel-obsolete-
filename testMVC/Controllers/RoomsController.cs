@@ -19,7 +19,7 @@ namespace testMVC.Controllers
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             var options = optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=mobilesdb;Trusted_Connection=True;")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AliHotelDB;Trusted_Connection=True;MultipleActiveResultSets=true")
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -39,7 +39,7 @@ namespace testMVC.Controllers
             return View(room);
         }
 
-        public IActionResult Details(string id)
+        public IActionResult Details(int id)
         {
             //var room = GetCustomers().SingleOrDefault(c => c.Id == id);
 

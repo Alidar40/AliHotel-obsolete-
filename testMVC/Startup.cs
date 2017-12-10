@@ -31,6 +31,7 @@ namespace testMVC
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
             services.AddMvc();
+            //services.AddApiVersioning();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +58,7 @@ namespace testMVC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");*/
             });
+            //app.UseApiVersioning();
         }
     }
 }
