@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using testMVC.Models;
 using testMVC.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using testMVC.Dtos;
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
@@ -38,9 +40,11 @@ namespace testMVC.Controllers
 
         public ActionResult New()
         {
+            var rooms = _context.Rooms.ToList();
             var viewModel = new CustomerFormViewModel
             {
                 Customer = new Customer(),
+                Rooms = rooms
             };
 
             return View("CustomerForm", viewModel);
@@ -81,9 +85,21 @@ namespace testMVC.Controllers
         {
             //var customers = GetCustomers();
 
-            var customers = _context.Customers.ToList();
+            //var customers = _context.Customers.ToList();
+            var customers = _context.Customers.Include(c => c.Room).ToList().Select(Mapper.Map<Customer, CustomerDto>);
+            /*foreach (var c in _context.Customers)
+            {
+                foreach (var r in _context.Rooms)
+                {
+                    if(c.RoomId == r.Id)
+                    {
+                        c.Room = r;
+                    }
+                }
+            }*/
 
-            return View(customers);
+            //return View(customers);
+            return View();
         }
 
         public IActionResult Details(int id)

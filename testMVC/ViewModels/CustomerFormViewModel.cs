@@ -8,6 +8,7 @@ namespace testMVC.ViewModels
 {
     public class CustomerFormViewModel
     {
+        public IEnumerable<Room> Rooms { get; set; }
         public Customer Customer { get; set; }
     }
 }

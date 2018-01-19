@@ -12,9 +12,9 @@ namespace testMVC.Models
         public int Number { get; set; }
         public int Capacity { get; set; }
 
-        [Required]
-        public RoomType RoomType { get; set; }
-        public byte RoomTypeId { get; set; }
+        //[Required]
+        //public RoomType RoomType { get; set; }
+        //public byte RoomTypeId { get; set; }
         //Type: 1 - standart, 2 - junior suite 3 - suite
         //public int Type { get; set; }
 

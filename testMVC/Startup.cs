@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using AutoMapper;
+using testMVC.Dtos;
+using Newtonsoft.Json;
 
 
 namespace testMVC
@@ -27,11 +30,33 @@ namespace testMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            // добавление сервисов Idenity
+            /*services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();*/
+
+            // добавление ApplicationDbContext для взаимодействия с базой данных учетных записей
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(connection));
-            services.AddMvc();
+            services.AddMvc()
+            .AddJsonOptions(options => {
+                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+             });
+            //camel notation:
+            /*.AddJsonOptions(options =>
+             {
+                 options.SerializerSettings.ContractResolver
+                     = new Newtonsoft.Json.Serialization.DefaultContractResolver();
+             });
+            */
+
+
             //services.AddApiVersioning();
+
+            Mapper.Initialize(c => c.AddProfile<MappingProfile>());
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +73,8 @@ namespace testMVC
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

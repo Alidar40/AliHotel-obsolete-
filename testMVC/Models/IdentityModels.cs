@@ -29,6 +29,11 @@ namespace testMVC.Models
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
         /*public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
