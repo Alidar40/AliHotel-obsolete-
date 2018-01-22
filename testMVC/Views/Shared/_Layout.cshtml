@@ -28,19 +28,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("AliHotel", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                <!--<a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">AliHotel</a>-->
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">AliHotel</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <!--<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>-->
-                    <!--<li><a asp-area="" asp-controller="Home" asp-action="Rooms">Rooms</a></li>-->
-                    <!--<li><a asp-area="" asp-controller="Customers" asp-action="Customers">Customers</a></li>-->
-                    <!--<li><a asp-area="" asp-controller="Home" asp-action="Customers">Customers</a></li>-->
-                    <!--<li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>-->
                     <li>@Html.ActionLink("Rooms", "Index", "Rooms")</li>
                     <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
                 </ul>
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>

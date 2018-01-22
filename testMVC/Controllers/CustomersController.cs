@@ -2,18 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using testMVC.Models;
-using testMVC.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using testMVC.Dtos;
-using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using testMVC.Data;
+using testMVC.Models;
+using testMVC.Models.AccountViewModels;
+using testMVC.Models.ManageViewModels;
+using testMVC.ViewModels;
+using testMVC.Dtos;
+using AutoMapper;
 
 namespace testMVC.Controllers
 {

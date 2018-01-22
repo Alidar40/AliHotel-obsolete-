@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using testMVC.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using AutoMapper;
+using testMVC.Models;
 using testMVC.Dtos;
+using testMVC.Data;
+using testMVC.Services;
 using Newtonsoft.Json;
 
 
@@ -32,18 +38,39 @@ namespace testMVC
         {
 
             // добавление сервисов Idenity
-            /*services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();*/
+                .AddDefaultTokenProviders();
 
             // добавление ApplicationDbContext для взаимодействия с базой данных учетных записей
-            string connection = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connection));
-            services.AddMvc()
-            .AddJsonOptions(options => {
+            //string connection = Configuration.GetConnectionString("DefaultConnection");
+            
+			services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+			// Add application services.
+            services.AddTransient<IEmailSender, EmailSender>();
+
+            /*var policy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            //.RequireRole("Admin", "SuperUser")
+            .Build();*/
+
+
+
+            services.AddMvc(config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+            
+            /*.AddJsonOptions(options => {
                  options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-             });
+             });*/
+
+
             //camel notation:
             /*.AddJsonOptions(options =>
              {
@@ -66,6 +93,7 @@ namespace testMVC
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                app.UseDatabaseErrorPage();
             }
             else
             {

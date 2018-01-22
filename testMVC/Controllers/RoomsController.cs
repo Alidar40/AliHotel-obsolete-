@@ -7,6 +7,7 @@ using testMVC.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using testMVC.Data;
 
 namespace testMVC.Controllers
 {

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using testMVC.Models;
+using testMVC.Data;
 
 namespace testMVC.Migrations
 {
