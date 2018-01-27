@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using testMVC.Models;
-using testMVC.Data;
 using testMVC.Dtos;
 using AutoMapper;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace testMVC.Controllers.Api
@@ -24,7 +24,7 @@ namespace testMVC.Controllers.Api
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             var options = optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AliHotelDB;Trusted_Connection=True;MultipleActiveResultSets=true")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=aspnet-identity-BB984385-CB7D-4F7D-829B-DEAF83487460;Trusted_Connection=True;MultipleActiveResultSets=true")
                 .Options;
 
             _context = new ApplicationDbContext(options);
@@ -33,6 +33,7 @@ namespace testMVC.Controllers.Api
 
         // GET /api/customers
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public IActionResult GetCustomers()
         {
             //var customerDtos = _context.Customers.FirstOrDefault();
@@ -55,19 +56,20 @@ namespace testMVC.Controllers.Api
                 }
             }
 
-
-            var customerDtos = _context.Customers
-                .Include(c => c.Room)
-                .ToList()
-                .Select(Mapper.Map<Customer, CustomerDto>);
-
             
+            var customerDtos = _context.Customers
+                    .Include(c => c.Room)
+                    .ToList();
+            
+
+
             return Ok(customerDtos);
         }
         
         // GET /api/customers/1
         [HttpGet("{id}")]
-        public IActionResult GetCustomer(int id)
+        [Authorize(Roles = "admin")]
+        public IActionResult GetCustomer(string id)
         {
             var customer = _context.Customers.Include(c => c.Room).SingleOrDefault(c => c.Id == id);
 
@@ -78,9 +80,8 @@ namespace testMVC.Controllers.Api
         }
 
         //POST/api/customers
-
-
         [HttpPost(Name = "CreateCustomer")]
+        [Authorize(Roles = "admin")]
         public IActionResult CreateCustomer([FromBody]CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
@@ -102,7 +103,8 @@ namespace testMVC.Controllers.Api
         
         //PUT/api/customers/1
         [HttpPut("{id}")]
-        public IActionResult UpdateCustomer(int id, [FromBody]CustomerDto customerDto)
+        [Authorize(Roles = "admin")]
+        public IActionResult UpdateCustomer(string id, [FromBody]CustomerDto customerDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
@@ -125,7 +127,8 @@ namespace testMVC.Controllers.Api
         //DELETE/api/customers/1
         //[HttpDelete]
         [HttpDelete("{id}")]
-        public IActionResult DeleteCustomer(int id)
+        [Authorize(Roles = "admin")]
+        public IActionResult DeleteCustomer(string id)
         {
             var customerInDb = _context.Customers.SingleOrDefault(c => c.Id == id);
 

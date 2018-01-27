@@ -1,0 +1,101 @@
+﻿@model testMVC.ViewModels.NewRentalFormViewModel
+@{
+    ViewData["Title"] = "New rental form";
+}
+
+@section styles {
+
+      <link href="~/css/typeahead.css" rel="stylesheet">
+
+
+  <!--   <link href="~/lib/DataTables/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css" /> -->
+
+}
+
+<h2>New rental</h2>
+<form id="newRental">
+    <div id ="user" class="form-group">
+        <label>User</label>
+        <div class="tt-container">
+            <input type="text" value="" class="form-control typeahead" />
+        </div>
+    </div> 
+    
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.RoomId)
+        @Html.DropDownListFor(m => m.Customer.RoomId, new SelectList(Model.Rooms.Where(o => o.IsOccupied == false).ToList(), "Id", "Number"), "Select room", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Room)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.ArrivalDate)
+        <input asp-for="Customer.ArrivalDate" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.ArrivalDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.DepartureDate)
+        <input asp-for="Customer.DepartureDate" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.DepartureDate)
+    </div>
+
+    <button class="btn btn-primary">Submit</button>
+</form>
+
+@section scripts
+{
+<script type="text/javascript" src="~/lib/typeahead.js/dist/typeahead.bundle.js"></script>
+
+    <script>
+        $(document).ready(function () { 
+            var vm = {};
+
+            var users = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/users?query=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#user .typeahead').typeahead({
+                minLength: 1,
+                highlight: true
+            }, {
+                name: 'users',
+                display: 'name',
+                source: users
+                }).on("typeahead:select", function (e, user) { 
+                    vm.userId = user.Id
+                });
+        });
+
+        $.validator.addMethod("validCustomer", function () {
+            return vm.userId && vm.userId !== 0;
+        }, "Please select a valid customer.");
+        
+        var validator = $("#newRental").validate({
+            submitHandler: function () {
+                $.ajax({
+                    url: "/rentals",
+                    method: "create",
+                    data: vm
+                })
+                    .done(function () {
+                        //toastr.success("Rentals successfully recorded.");
+
+                        //$("#user").typeahead("val", "");
+
+                        //vm = {};
+
+                        //validator.resetForm();
+                    })
+                    .fail(function () {
+                        //toastr.error("Something unexpected happened.");
+                    });
+
+                return false;
+            }
+        });
+        
+    </script>
+}

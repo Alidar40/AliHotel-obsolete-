@@ -17,7 +17,6 @@ using Microsoft.Extensions.Logging;
 using AutoMapper;
 using testMVC.Models;
 using testMVC.Dtos;
-using testMVC.Data;
 using testMVC.Services;
 using Newtonsoft.Json;
 
@@ -36,16 +35,23 @@ namespace testMVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // добавление сервисов Idenity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            /*services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders()
+                .AddUserStore<UserStore<ApplicationUser, ApplicationRole, ApplicationDbContext, Guid>>()
+                .AddRoleStore<RoleStore<ApplicationRole, ApplicationDbContext, Guid>>();*/
+
             // добавление ApplicationDbContext для взаимодействия с базой данных учетных записей
             //string connection = Configuration.GetConnectionString("DefaultConnection");
-            
-			services.AddDbContext<ApplicationDbContext>(options =>
+
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
 			// Add application services.

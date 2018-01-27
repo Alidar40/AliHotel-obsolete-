@@ -1,0 +1,28 @@
+﻿@model testMVC.ViewModels.NewRentalFormViewModel
+@{
+    ViewData["Title"] = "New";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Are you sure you want to close order?</h2>
+<h3>By clicking the button below you will receive a bill and your room will be released</h3>
+<h2>
+
+</h2>
+@using (Html.BeginForm("Delete", "Rentals"))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Close order</button>
+}
+
+<h2>
+
+</h2>
+
+@using (Html.BeginForm("Index", "Home"))
+{
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Back to main page</button>
+}
+
+

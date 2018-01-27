@@ -1,0 +1,36 @@
+﻿@model testMVC.ViewModels.NewRentalFormViewModel
+@{
+    ViewData["Title"] = "New";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New rental</h2>
+
+@using (Html.BeginForm("Create", "Rentals"))
+{
+    @Html.ValidationSummary(true, "Please fix the following errors.")
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.RoomId)
+        @Html.DropDownListFor(m => m.Customer.RoomId, new SelectList(Model.Rooms.Where(o => o.IsOccupied == false).ToList(), "Id", "Number"), "Select room", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.Room)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.ArrivalDate)
+        <input asp-for="Customer.ArrivalDate" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.ArrivalDate)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.DepartureDate)
+        <input asp-for="Customer.DepartureDate" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Customer.DepartureDate)
+    </div>
+    <!--Html.HiddenFor(m => m.Customer.Id)-->
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Submit</button>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+
+

@@ -1,7 +1,7 @@
 ﻿@model testMVC.Models.Room
 @{
     ViewData["Title"] = Model.Number;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Room number #@Model.Number</h2>
@@ -10,7 +10,6 @@
     <li>Room number: @Model.Number</li>
     <li>Room capacity: @Model.Capacity</li>
     <li>Room type: @Model.RoomType</li>
-    <li>Room floor: @Model.Floor</li>
     <li>Room price: @Model.Price</li>
 </ul>
 

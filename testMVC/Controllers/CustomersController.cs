@@ -9,9 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using testMVC.Data;
 using testMVC.Models;
 using testMVC.Models.AccountViewModels;
 using testMVC.Models.ManageViewModels;
@@ -23,18 +21,19 @@ namespace testMVC.Controllers
 {
     public class CustomersController : Controller
     {
-        
         private ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CustomersController()
+        public CustomersController(UserManager<ApplicationUser> userManager)
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
             var options = optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AliHotelDB;Trusted_Connection=True;MultipleActiveResultSets=true")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=aspnet-identity-BB984385-CB7D-4F7D-829B-DEAF83487460;Trusted_Connection=True;MultipleActiveResultSets=true")
                 .Options;
 
             _context = new ApplicationDbContext(options);
+            _userManager = userManager;
         }
 
         protected override void Dispose(bool disposing)
@@ -42,6 +41,7 @@ namespace testMVC.Controllers
             _context.Dispose();
         }
 
+        [Authorize(Roles = "admin")]
         public ActionResult New()
         {
             var rooms = _context.Rooms.ToList();
@@ -56,6 +56,7 @@ namespace testMVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin")]
         public ActionResult Save(Customer customer)
         {
             if(!ModelState.IsValid)
@@ -76,7 +77,6 @@ namespace testMVC.Controllers
                 var customerInDb = _context.Customers.Single(c => c.Id == customer.Id);
 
                 customerInDb.Name = customer.Name;
-                customerInDb.BirthDate = customer.BirthDate;
                 customerInDb.DepartureDate = customer.DepartureDate;
             }
 
@@ -85,40 +85,38 @@ namespace testMVC.Controllers
             return RedirectToAction("Index", "Customers");
         }
 
-        public ViewResult Index()
+        [Authorize(Roles = "admin")]
+        public ViewResult Ledger()
         {
-            //var customers = GetCustomers();
-
-            //var customers = _context.Customers.ToList();
-            var customers = _context.Customers.Include(c => c.Room).ToList().Select(Mapper.Map<Customer, CustomerDto>);
-            /*foreach (var c in _context.Customers)
-            {
-                foreach (var r in _context.Rooms)
-                {
-                    if(c.RoomId == r.Id)
-                    {
-                        c.Room = r;
-                    }
-                }
-            }*/
-
-            //return View(customers);
-            return View();
+            var customers = _context.Customers.Include(c => c.Room).ToList();
+            
+            return View("Ledger");
+            
         }
 
-        public IActionResult Details(int id)
+        [Authorize(Roles = "admin")]
+        public ViewResult Index()
         {
-            //var customer = GetCustomers().SingleOrDefault(c => c.Id == id);
+            var customers = _context.Customers.Include(c => c.Room).Where(c => c.IsClosed == false).ToList();
+            
+            return View("List");
+        }
 
-            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+        [Authorize(Roles = "admin")]
+        public IActionResult Details(string id)
+        {
+            var customer = _context.Customers.Single(c => c.Id == id);
 
             if (customer == null)
                 return NotFound();
+            
+            ApplicationUser user = _userManager.FindByIdAsync(customer.UserId).Result;
 
-            return View(customer);
+            return View("Details", user);
         }
 
-        public ActionResult Edit(int id)
+        [Authorize(Roles = "admin")]
+        public ActionResult Edit(string id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             
@@ -127,20 +125,11 @@ namespace testMVC.Controllers
 
             var viewModel = new CustomerFormViewModel
             {
-                Customer = customer
+                Customer = customer,
+                Rooms = _context.Rooms.ToList()
             };
-
+            
             return View("CustomerForm", viewModel);
         }
-        /*
-        private IEnumerable<Customer>GetCustomers()
-        {
-            return new List<Customer>
-            {
-                new Customer { Id = "A1", Name = "Ivan Ivanov", Room = 1, ArrivalDate = "30.12.2017", DepartureDate =  "08.01.2018"},
-                new Customer { Id = "A2", Name = "Petr Petrov", Room = 2, ArrivalDate = "31.11.2017", DepartureDate =  "20.12.2017"}
-            };
-        }
-        */
     }
 }

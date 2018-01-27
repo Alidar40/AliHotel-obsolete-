@@ -1,0 +1,88 @@
+﻿@model IEnumerable<testMVC.Models.Customer>
+@{
+    ViewData["Title"] = "Customers";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+
+  <!--  <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+<!--   <link href="~/lib/DataTables/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css" /> -->
+
+}
+
+<!-- CSS dependencies -->
+<!-- JS dependencies -->
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="~/lib/bootbox.js/bootbox.min.js"></script>
+
+
+<h2>Ledger</h2>
+
+<table id ="customers" class="table table-­‐bordered table-­‐hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Room number</th>
+            <th>Arrival Date</th>
+            <th>Departure Date</th>
+            <th>Bill</th>
+            <th>Is closed</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+
+
+@section scripts
+{
+    
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            var table = $("#customers").DataTable({
+                ajax: {
+                    url: "/api/customers",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "name",
+                        render: function (data, type, customer) {
+                            return "<a href='/customers/details/" + customer.id + "'>" + customer.name + "</a>";
+                        }
+
+                    },
+                    {
+                        data: "room.number"
+                    },
+                    {
+                        data: "arrivalDate",
+                        /*render: function (data, type, customer) {
+                            return "<a>" + customer.arrivalDate.value.toShortDateString + "</a>";
+                        }*/
+                    },
+                    {
+                        data: "departureDate"
+                    },
+                    {
+                        data: "bill"
+                    },
+                    {
+                        data: "isClosed"
+                    }
+                ]
+            });
+
+        });
+
+    </script>
+    
+}

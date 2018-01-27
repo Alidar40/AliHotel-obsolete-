@@ -5,12 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using testMVC.Models;
 using Microsoft.EntityFrameworkCore;
+using testMVC;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using testMVC.Data;
 
 namespace testMVC.Controllers
 {
+
     public class RoomsController : Controller
     {
         private ApplicationDbContext _context;
@@ -18,12 +19,13 @@ namespace testMVC.Controllers
         public RoomsController()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-
+            
             var options = optionsBuilder
-                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=AliHotelDB;Trusted_Connection=True;MultipleActiveResultSets=true")
+                .UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=aspnet-identity-BB984385-CB7D-4F7D-829B-DEAF83487460;Trusted_Connection=True;MultipleActiveResultSets=true")
                 .Options;
 
             _context = new ApplicationDbContext(options);
+ 
         }
 
         protected override void Dispose(bool disposing)
@@ -34,10 +36,15 @@ namespace testMVC.Controllers
         public ViewResult Index()
         {
             //var room = GetRoom();
+            //var room;
+            if (User.IsInRole("admin"))
+            {
+                //room = _context.Rooms.ToList();
+                return View("List");
+            }
 
-            var room = _context.Rooms.ToList();
-
-            return View(room);
+            //room = _context.Rooms.ToList().Where(r => r.IsOccupied == false);
+            return View("ReadOnlyList");
         }
 
         public IActionResult Details(int id)

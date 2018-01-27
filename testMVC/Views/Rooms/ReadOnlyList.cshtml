@@ -1,0 +1,94 @@
+﻿@model IEnumerable<testMVC.Models.Room>
+@{
+    ViewData["Title"] = "Rooms";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" /> 
+
+  <!--  <link href="~/lib/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet"> -->
+
+
+
+ <!--   <link href="~/lib/DataTables/media/css/jquery.dataTables.css" rel="stylesheet" type="text/css" /> -->
+
+}
+
+<!-- CSS dependencies -->
+<!-- JS dependencies -->
+<script src="~/lib/bootbox.js/bootbox.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="~/lib/DataTables/media/js/jquery.dataTables.js"></script>
+<script src="~/lib/bootbox.js/bootbox.min.js"></script>
+
+
+<h2>Free rooms</h2>
+
+<table id="rooms" class="table table-­‐bordered table-­‐hover">
+    <thead>
+        <tr>
+            <th>Number</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Capacity</th>
+            <th>Make order</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+@section scripts
+    {
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            var table = $("#rooms").DataTable({
+                ajax: {
+                    url: "/api/rooms",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "number"
+                        /*render: function (data, type, room) {
+                            return "<a href='/customer/edit/" + room.id + "'>" + room.number + "</a>";
+                        }*/
+
+                    },
+                    {
+                        data: "roomType.name"
+                    },
+                    {
+                        data: "price"
+                        /*render: function (data) {
+                            return "<button class='btn-link js-delete' data-customer-id=" + data + ">Delete</button>"
+                        }*/
+                    },
+                    {
+                        data: "capacity"
+                    },
+                    {
+                        data: "id",
+                        render: function (data) {
+                            return "<button class='btn-link js-settle' data-room-id=" + data + ">Settle</button>"
+                            //return "<a href='/room/new/" + "'>" +"</a>";
+                        }
+                    }
+                ]
+            });
+
+            $("#rooms").on("click", ".js-settle", function () {
+                window.location.href = '@Url.Action("New", "Rentals")'
+            });
+
+        });
+
+    </script>
+
+}

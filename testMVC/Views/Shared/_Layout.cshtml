@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - AliHotel</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-lumen.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <environment exclude="Development">
@@ -32,8 +32,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Rooms", "Index", "Rooms")</li>
                     <li>@Html.ActionLink("Customers", "Index", "Customers")</li>
+                    <li>@Html.ActionLink("Ledger", "Ledger", "Customers")</li>
+                    <li><a href="/Rooms">Rooms</a></li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
             </div>

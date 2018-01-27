@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace testMVC.Models
 {
     public class Room
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         public int Number { get; set; }
         public int Capacity { get; set; }
@@ -19,7 +22,9 @@ namespace testMVC.Models
         //public int Type { get; set; }
 
         public bool IsOccupied { get; set; }
-        public int Floor { get; set; }
+        //public int Floor { get; set; }
         public float Price { get; set; }
+        
+        public byte ActiveRenters { get; set; }
     }
 }
